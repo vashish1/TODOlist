@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// doCmd represents the do command
+// addCmd represents the do command
 var addCmd = &cobra.Command{
 	Use:   "do",
 	Short: "A brief description of your command",
