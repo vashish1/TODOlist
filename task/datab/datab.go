@@ -12,8 +12,8 @@ var db *bolt.DB
 
 //Task is a struct ...
 type Task struct {
-	key   int
-	value string
+	Key   int
+	Value string
 }
 
 //Init is used to open a database
@@ -66,8 +66,8 @@ func Alltasks() ([]Task, error) {
 
 		for k, v := c.First(); k != nil; k, v = c.Next() {
 			task = append(task, Task{
-				key:   btoi(k),
-				value: string(v),
+				Key:   btoi(k),
+				Value: string(v),
 			})
 		}
 		return nil

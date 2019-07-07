@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"TODOlist/task/datab"
 	"fmt"
-     "strconv"
+	"strconv"
+
 	"github.com/spf13/cobra"
 )
 
@@ -12,16 +14,35 @@ var doCmd = &cobra.Command{
 	Short: "Mark a task as complete",
 
 	Run: func(cmd *cobra.Command, args []string) {
-	  var ids []int
-	  for _,i:= range args{
-		  id,err:=strconv.Atoi(i)
-		  if err!=nil{
-			  fmt.Println("could not parse the argument")
-            }else{
-				ids=append(ids,id)
+		var ids []int
+		for _, i := range args {
+			id, err := strconv.Atoi(i)
+			if err != nil {
+				fmt.Println("could not parse the argument")
+			} else {
+				ids = append(ids, id)
 			}
-	  }
-	  fmt.Println(ids)
+		}
+		tasks, err := datab.Alltasks()
+		if err != nil {
+			fmt.Println("something went wrong:", err)
+			return
+		}
+		for _, i := range ids {
+			if i <= 0 || i > len(tasks) {
+				fmt.Println("invalid task number!!")
+				continue
+			}
+			task := tasks[i-1]
+			err := datab.Deletetask(task.Key)
+			if err != nil {
+				fmt.Println("failed to mark as completed:\n", err)
+
+			} else {
+				fmt.Printf("marked %s as completed", task.Value)
+			}
+		}
+
 	},
 }
 
