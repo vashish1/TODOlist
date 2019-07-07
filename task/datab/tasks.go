@@ -55,3 +55,35 @@ func itob(v int) []byte {
 func btoi(b []byte) int {
 	return (int(binary.BigEndian.Uint64(b)))
 }
+
+//Alltasks return the slice of tasks
+func Alltasks() ([]Task, error) {
+	var task []Task
+	err := db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket(taskbucket)
+
+		c := b.Cursor()
+
+		for k, v := c.First(); k != nil; k, v = c.Next() {
+			task = append(task, Task{
+				key:   btoi(k),
+				value: string(v),
+			})
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return task, nil
+}
+
+//Deletetask deletes the corresponding key and value pairsS
+func Deletetask(key int) error {
+	err := db.Update(func(tx *bolt.Tx) error {
+		b := tx.Bucket(taskbucket)
+		return b.Delete(itob(key))
+
+	})
+	return err
+}
