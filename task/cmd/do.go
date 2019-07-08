@@ -39,7 +39,7 @@ var doCmd = &cobra.Command{
 				fmt.Println("failed to mark as completed:\n", err)
 
 			} else {
-				fmt.Printf("marked %s as completed", task.Value)
+				fmt.Printf("Marked \"%s\" as completed\n", task.Value)
 			}
 		}
 

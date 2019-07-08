@@ -20,7 +20,8 @@ var addCmd = &cobra.Command{
 			fmt.Println("something went wrong:", err)
 			return
 		}
-		fmt.Printf("task %s is added into the list\n", str)
+		fmt.Printf("task \"%s\" added in the list.\n ", str)
+
 	},
 }
 
